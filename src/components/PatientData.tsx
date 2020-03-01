@@ -46,7 +46,7 @@ class PatientData extends Component<IProps, IState> {
                             Code Category
                         </Col>
 
-                        <Col xs="2" sm="2" md="3" style={{ textAlign: 'center', right: 50, position: 'fixed' }}>
+                        <Col xs="2" sm="2" md="3" style={{ textAlign: 'center', marginLeft: -60 }}>
                             Event Date
                         </Col>
                     

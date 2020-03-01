@@ -8,13 +8,12 @@ import PatientData from './PatientData'
 
 interface IProps {
     data: []
-    
 }
 
 interface IState {
-    eventCode: any
-    codeCategory: any
-    filteredData: any
+    eventCode: string;
+    codeCategory: string;
+    filteredData: any;
     filteredDataCode: any;
     filteredDataCategory: any;
 }
@@ -22,6 +21,7 @@ interface IState {
 class PatientFilter extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
+        this.componentDidMount = this.componentDidMount.bind(this);
         this.handleEventCodeChange = this.handleEventCodeChange.bind(this);
         this.handleCodeCategoryChange = this.handleCodeCategoryChange.bind(this);
         this.filterEventCode = this.filterEventCode.bind(this);
@@ -30,13 +30,14 @@ class PatientFilter extends Component<IProps, IState> {
         this.state = {
             eventCode: '',
             codeCategory: '',
-            filteredData: [],
-            filteredDataCode: [],
-            filteredDataCategory: []
+            filteredData: this.props.data,
+            filteredDataCode: this.props.data,
+            filteredDataCategory: this.props.data
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        console.log('filteredData', this.state.filteredData)
     }
 
     async handleEventCodeChange (event: any) {
@@ -54,43 +55,64 @@ class PatientFilter extends Component<IProps, IState> {
     };
 
     async filterEventCode(){
-        let filtered_data = this.props.data.filter(
+        let filtered_data = this.state.filteredDataCategory.filter(
             (patient: any) => {
             return patient.event_code.toLowerCase().indexOf(
                 this.state.eventCode.toLowerCase()) !== -1;
         })
         
         await this.setState({
-            filteredDataCode : filtered_data
+            filteredData : filtered_data,
+            filteredDataCode: filtered_data
         })
-        let final_data = this.state.filteredDataCode.concat(this.state.filteredDataCategory)
 
-        await this.setState({
-            filteredData : final_data
-        })
+        if (this.state.codeCategory === '' && this.state.eventCode === ''){
+            await this.setState({
+                filteredData : this.props.data
+            })
+        } else if (this.state.codeCategory === '' && this.state.eventCode !== ''){
+            await this.setState({
+                filteredData : this.state.filteredDataCode
+            })
+        } else if (this.state.codeCategory !== '' && this.state.eventCode === ''){
+            await this.setState({
+                filteredData : this.state.filteredDataCategory
+            })
+        }
+
         console.log(this.state.filteredData)
     }
 
     async filterCodeCategory(){
-        let filtered_data = this.props.data.filter(
+        let filtered_data = this.state.filteredDataCode.filter(
             (patient: any) => {
             return patient.code_category.toLowerCase().indexOf(
                 this.state.codeCategory.toLowerCase()) !== -1;
         })
 
         await this.setState({
-            filteredDataCategory : filtered_data
+            filteredData : filtered_data,
+            filteredDataCategory: filtered_data
         })
-        let final_data = this.state.filteredDataCategory.concat(this.state.filteredDataCode)
 
-        await this.setState({
-            filteredData : final_data
-        })
+        if (this.state.codeCategory === '' && this.state.eventCode === ''){
+            await this.setState({
+                filteredData : this.props.data
+            })
+        } else if (this.state.codeCategory === '' && this.state.eventCode !== ''){
+            await this.setState({
+                filteredData : this.state.filteredDataCode
+            })
+        } else if (this.state.codeCategory !== '' && this.state.eventCode === ''){
+            await this.setState({
+                filteredData : this.state.filteredDataCategory
+            })
+        }
+
         console.log(this.state.filteredData)
     }
 
     render() {
-
         return (
             <div>
                 <Row style={{ padding: 30 }}>
@@ -120,8 +142,11 @@ class PatientFilter extends Component<IProps, IState> {
                     </Col>
                     <Col xs="2" sm="2" md="3"></Col>
                 </Row>
-
-                <PatientData data={this.props.data}/>
+                {(this.state.filteredData.length !== 0)  ?
+                    <PatientData data={this.state.filteredData}/>
+                :
+                <h3 style ={{ textAlign: 'center', paddingTop: 20 }}> No patient records found !!!</h3>
+                }
             </div>
         );
     }
