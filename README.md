@@ -2,7 +2,7 @@
 
 This is a react and python based web application which reveals patient data and can be filtered by their event code and code category.
 
-I built and deployed the front end to AWS Amplify for CI/CD. 
+I built and deployed the front end to AWS Amplify for CI/CD. <br />
 The url for the app:  https://master.d3d9eg977f1f5m.amplifyapp.com/
 
 The backend is also deployed to: https://xwyir2jma1.execute-api.us-east-1.amazonaws.com/prod/healthreveal
