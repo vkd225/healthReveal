@@ -17,6 +17,5 @@ npm start
 2. The backend is a simple python application which sends dummy data and is deployed to a AWS Lambda function which is behind an API Gateway.
 ### To run backend locally:
 ```
-checkout out `backend` branch of the repo and 
-run `python lambda_handler.py`
+checkout out `backend` branch of the repo and run `python lambda_handler.py`
 ```
