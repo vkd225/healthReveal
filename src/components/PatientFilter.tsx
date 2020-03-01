@@ -146,7 +146,7 @@ class PatientFilter extends Component<IProps, IState> {
                 {(this.state.filteredData.length !== 0)  ?
                     <PatientData data={this.state.filteredData}/>
                 :
-                <h3 style ={{ textAlign: 'center', paddingTop: 20 }}> No patient records found !!!</h3>
+                <h3 style ={{ textAlign: 'center', padding: 40 }}> No patient records found !!!</h3>
                 }
             </div>
         );
