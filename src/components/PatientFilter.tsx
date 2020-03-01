@@ -37,7 +37,6 @@ class PatientFilter extends Component<IProps, IState> {
     }
 
     async componentDidMount() {
-        console.log('filteredData', this.state.filteredData)
     }
 
     async handleEventCodeChange (event: any) {
@@ -63,12 +62,14 @@ class PatientFilter extends Component<IProps, IState> {
         
         await this.setState({
             filteredData : filtered_data,
-            filteredDataCode: filtered_data
+            filteredDataCode: filtered_data,
+            filteredDataCategory: this.props.data
         })
 
         if (this.state.codeCategory === '' && this.state.eventCode === ''){
             await this.setState({
-                filteredData : this.props.data
+                filteredData : this.props.data,
+                filteredDataCode: this.props.data
             })
         } else if (this.state.codeCategory === '' && this.state.eventCode !== ''){
             await this.setState({
@@ -79,8 +80,7 @@ class PatientFilter extends Component<IProps, IState> {
                 filteredData : this.state.filteredDataCategory
             })
         }
-
-        console.log(this.state.filteredData)
+        console.log('filtered Data: ', this.state.filteredData)
     }
 
     async filterCodeCategory(){
@@ -97,7 +97,9 @@ class PatientFilter extends Component<IProps, IState> {
 
         if (this.state.codeCategory === '' && this.state.eventCode === ''){
             await this.setState({
-                filteredData : this.props.data
+                filteredData : this.props.data,
+                filteredDataCategory: this.props.data,
+                filteredDataCode: this.props.data
             })
         } else if (this.state.codeCategory === '' && this.state.eventCode !== ''){
             await this.setState({
@@ -108,8 +110,7 @@ class PatientFilter extends Component<IProps, IState> {
                 filteredData : this.state.filteredDataCategory
             })
         }
-
-        console.log(this.state.filteredData)
+        console.log('filtered Data: ', this.state.filteredData)
     }
 
     render() {
@@ -136,7 +137,7 @@ class PatientFilter extends Component<IProps, IState> {
                     </Col>
                     <Col xs="1" sm="1" md="2" style={{ left: 30 }}>
                         <FormGroup>
-                            <Input placeholder="event category" style={{width: 170}}
+                            <Input placeholder="code category" style={{width: 170}}
                             value={this.state.codeCategory} onChange={this.handleCodeCategoryChange}/>
                         </FormGroup>
                     </Col>
